@@ -14,6 +14,6 @@ abstract class AppDB : RoomDatabase() {
         const val DB_NAME = "app_db"
     }
 
-    abstract fun bookDao(): LockDao
-    abstract fun favoriteDao(): BuildingDao
+    abstract fun lockDao(): LockDao
+    abstract fun buildingDao(): BuildingDao
 }
