@@ -1,8 +1,9 @@
-package mehdiparsaei.simonsvoss.assignment
+package mehdiparsaei.simonsvoss.assignment.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import mehdiparsaei.simonsvoss.assignment.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
