@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         is Resource.Success -> it.data?.let { data ->
                             mainAdapter.submitList(data)
+                            mainAdapter.searchQuery = viewModel.searchQuery.value
                         }
                     }
                 }
