@@ -28,6 +28,6 @@ class LockRepositoryImpl(
                 val locks = result.locks
                 appDB.lockDao().insertAll(locks)
             }
-        }
+        },
     )
 }

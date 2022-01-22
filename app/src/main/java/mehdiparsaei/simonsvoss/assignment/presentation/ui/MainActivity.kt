@@ -1,10 +1,11 @@
-package mehdiparsaei.simonsvoss.assignment.ui
+package mehdiparsaei.simonsvoss.assignment.presentation.ui
 
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import mehdiparsaei.simonsvoss.assignment.R
 import mehdiparsaei.simonsvoss.assignment.databinding.ActivityMainBinding
 import mehdiparsaei.simonsvoss.assignment.domain.util.Resource
+import mehdiparsaei.simonsvoss.assignment.presentation.util.setOnQueryTextChanged
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainAdapter: MainAdapter
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +65,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu);
+
+        val searchItem = menu.findItem(R.id.action_search_query)
+        searchView = searchItem.actionView as SearchView
+
+        val pendingQuery = viewModel.searchQuery.value
+        if (pendingQuery != null && pendingQuery.isNotEmpty()) {
+            searchItem.expandActionView()
+            searchView.setQuery(pendingQuery, false)
+        }
+
+        searchView.setOnQueryTextChanged {
+            viewModel.searchQuery.value = it
+        }
+
         return true;
     }
 }

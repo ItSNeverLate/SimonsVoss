@@ -1,4 +1,4 @@
-package mehdiparsaei.simonsvoss.assignment.ui
+package mehdiparsaei.simonsvoss.assignment.presentation.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
