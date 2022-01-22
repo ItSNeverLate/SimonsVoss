@@ -28,7 +28,7 @@ class MainAdapter :
             binding.apply {
                 textViewLockName.text = lock.name
                 textViewDetail.text =
-                    "${lock.buildingShortCut} - ${lock.floor} - ${lock.roomNumber}"
+                    "${lock.shortCut} - ${lock.floor} - ${lock.roomNumber}"
             }
         }
     }

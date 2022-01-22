@@ -13,6 +13,6 @@ interface LockDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(locks: List<Lock>)
 
-    @Query("SELECT locks.*, buildings.shortCut AS buildingShortCut FROM locks INNER JOIN buildings ON locks.buildingId = buildings.id WHERE locks.name LIKE '%' || :searchQuery ||'%'")
+    @Query("SELECT locks.*, buildings.shortCut FROM locks INNER JOIN buildings ON locks.buildingId = buildings.id WHERE locks.name LIKE '%' || :searchQuery ||'%'")
     fun getAll(searchQuery: String): Flow<List<Lock>>
 }

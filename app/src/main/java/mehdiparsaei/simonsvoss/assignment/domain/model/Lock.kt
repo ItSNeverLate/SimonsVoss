@@ -1,11 +1,19 @@
 package mehdiparsaei.simonsvoss.assignment.domain.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
 
-@Entity(tableName = "locks")
+@Entity(
+    tableName = "locks",
+    foreignKeys = [
+        ForeignKey(
+            entity = Building::class,
+            parentColumns = ["id"],
+            childColumns = ["buildingId"],
+            onDelete = CASCADE
+        ),
+    ],
+)
 data class Lock(
     @PrimaryKey
     val id: String,
@@ -14,11 +22,9 @@ data class Lock(
     val description: String = "",
     @ColumnInfo(defaultValue = "Undefined")
     val floor: String,
+    val shortCut: String? = null,
     val name: String,
     val roomNumber: String,
     val serialNumber: String,
     val type: String
-){
-    @Ignore
-    val buildingShortCut: String? = null
-}
+)
