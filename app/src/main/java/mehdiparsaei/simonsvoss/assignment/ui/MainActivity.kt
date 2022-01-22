@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import mehdiparsaei.simonsvoss.assignment.R
@@ -32,24 +33,30 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         mainAdapter = MainAdapter()
+        binding.apply {
+            recyclerView.apply {
+                adapter = mainAdapter
+                layoutManager = LinearLayoutManager(this@MainActivity)
+                setHasFixedSize(true)
+            }
+        }
     }
 
     private fun subscribe() {
         binding.apply {
             lifecycleScope.launchWhenResumed {
                 viewModel.locksFlow.collectLatest {
-                    when (it) {
-                        is Resource.Loading -> {
-                            progressBar.isVisible = true
+                    progressBar.isVisible = it is Resource.Loading
+
+                    when(it) {
+                        is Resource.Error -> it.error?.let { error ->
+                            Toast.makeText(this@MainActivity, error.toString(), Toast.LENGTH_SHORT)
+                                .show()
                         }
-                        is Resource.Error -> {
-                            Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT).show()
-                        }
-                        is Resource.Success -> {
-                            mainAdapter.submitList(it.data)
+                        is Resource.Success -> it.data?.let { data ->
+                            mainAdapter.submitList(data)
                         }
                     }
-
                 }
             }
         }
