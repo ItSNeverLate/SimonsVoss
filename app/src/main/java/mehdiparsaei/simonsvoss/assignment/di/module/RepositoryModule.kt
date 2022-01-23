@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import mehdiparsaei.simonsvoss.assignment.data.local.AppDB
+import mehdiparsaei.simonsvoss.assignment.data.local.preferences.PreferencesManager
 import mehdiparsaei.simonsvoss.assignment.data.remote.AppApi
 import mehdiparsaei.simonsvoss.assignment.data.repository.LockRepositoryImpl
 import mehdiparsaei.simonsvoss.assignment.domain.repository.LockRepository
@@ -16,6 +17,10 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideLockRepository(api: AppApi, db: AppDB): LockRepository =
-        LockRepositoryImpl(api, db)
+    fun provideLockRepository(
+        api: AppApi,
+        db: AppDB,
+        preferences: PreferencesManager
+    ): LockRepository =
+        LockRepositoryImpl(api, db, preferences)
 }

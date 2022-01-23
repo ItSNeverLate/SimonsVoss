@@ -1,14 +1,14 @@
 package mehdiparsaei.simonsvoss.assignment.data.util
 
 import kotlinx.coroutines.flow.*
+import mehdiparsaei.simonsvoss.assignment.data.local.preferences.PreferencesManager
 import mehdiparsaei.simonsvoss.assignment.domain.util.Resource
 
 inline fun <ResultType, RequestType> networkBoundResource(
     crossinline query: () -> Flow<ResultType>,
     crossinline fetch: suspend () -> RequestType,
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
-    crossinline shouldFetch: (ResultType) -> Boolean = {
-        // Database Refreshing policy
+    crossinline shouldFetch: suspend (ResultType) -> Boolean = {
         true
     },
 ) = flow {

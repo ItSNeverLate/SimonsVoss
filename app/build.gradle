@@ -62,4 +62,7 @@ dependencies {
 
     // by viewModels
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+
+    // Data Store (Shared Preferences)
+    implementation "androidx.datastore:datastore-preferences:$dsPreferencesVersion"
 }
