@@ -27,6 +27,9 @@ class LockRepositoryImpl(
         },
         saveFetchResult = { result ->
             appDB.withTransaction {
+                // The deletion operation will reflect in the lock table as well (onDelete = CASCADE)
+                appDB.buildingDao().deleteAll()
+
                 val buildings = result.buildings
                 appDB.buildingDao().insertAll(buildings)
 
